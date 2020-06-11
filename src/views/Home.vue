@@ -55,6 +55,22 @@ export default {
   },
   // mounted
 
+  watch: {
+    listadoJuegos () {
+      var listaMeta = ''
+      this.listadoJuegos.forEach(element => {
+        listaMeta += element.name.toLowerCase() + ','
+      })
+      listaMeta += 'juegos online, juegos en linea, game online'
+
+      document.querySelector('meta[name="keywords"]').setAttribute('content', listaMeta)
+      // console.log(document.querySelector('meta[name="keywords"]'))
+    }
+    // listadoJuegos
+
+  },
+  // watch
+
   methods: {
     leerDatos () {
       const url = 'https://promarketingchile.com/games.json'
