@@ -1,18 +1,37 @@
 <template>
-  <v-row align="center" justify="center">
+  <v-row>
+    <v-row align="center" justify="center" v-if="loading">
+      <v-col cols="6">
+        <baseloading
+          :titulo="'Preparando listado de juegos'" />
+      </v-col>
+    </v-row>
 
-    <v-col cols="6" v-if="loading">
-      <baseloading
-        :titulo="'Preparando listado de juegos'" />
-    </v-col>
-    <v-col cols="12" sm="6" md="4" xl="3"
-      v-for="(item, i) in listadoJuegos"
-      :key="i"
-      v-else
-      >
-        <basecard
-            :juego="item"/>
-    </v-col>
+    <v-row v-if="! loading">
+      <nav>
+        <v-app-bar app>
+          <v-icon>mdi-magnify</v-icon>
+          <v-text-field
+            type="search"
+            class="mx-4"
+            v-model="buscar"
+            placeholder="Buscar juego..."
+            color="primary"
+          />
+
+        </v-app-bar>
+      </nav>
+      <v-col cols="11">
+      </v-col>
+
+      <v-col cols="12" sm="6" md="4" xl="3"
+        v-for="(item, i) in listaFiltrada"
+        :key="i"
+        >
+          <basecard
+              :juego="item"/>
+      </v-col>
+    </v-row>
   </v-row>
 </template>
 
@@ -25,7 +44,8 @@ export default {
   data: function () {
     return {
       loading: true,
-      listadoJuegos: []
+      listadoJuegos: [],
+      buscar: ''
     }
   },
   // data
@@ -52,7 +72,7 @@ export default {
             const url = 'games.json'
             axios.get(url)
               .then((response) => {
-                this.listadoJuegos = response.data.games[0]
+                this.listadoJuegos = Object.values(response.data.games[0])
               }).catch(error => {
                 this.mostrarError(error)
               }).finally(() => (this.loading = false))
@@ -83,8 +103,26 @@ export default {
     }
     // mostrarError
 
-  }
+  },
   // methods
+
+  computed: {
+    listaFiltrada: function () {
+      const filtro = this.buscar.toLowerCase()
+      if (filtro.length > 0) {
+        return this.listadoJuegos.filter(function (element, index) {
+          return (
+            element.name.toLowerCase().includes(filtro) ||
+            element.image.alt.toLowerCase().includes(filtro)
+          )
+        })
+      } else {
+        return this.listadoJuegos
+      }
+    }
+    // listaFiltrada
+  }
+  // computed
 
 }
 </script>
