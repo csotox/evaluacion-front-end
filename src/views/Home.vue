@@ -1,6 +1,6 @@
 <template>
-  <v-row>
-    <v-col>
+  <v-row align="center" justify="center">
+    <v-col cols="12">
       Hola mundo
     </v-col>
   </v-row>
