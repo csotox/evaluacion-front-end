@@ -76,6 +76,11 @@ export default {
       const url = 'https://promarketingchile.com/games.json'
       this.loading = true
 
+      if (localStorage.getItem('juegos')) {
+        this.listadoJuegos = JSON.parse(localStorage.getItem('juegos'))
+        this.loading = false
+      }
+
       axios.get(url)
         .then((response) => {
           this.listadoJuegos = response.data.games[0]
@@ -89,6 +94,8 @@ export default {
             axios.get(url)
               .then((response) => {
                 this.listadoJuegos = Object.values(response.data.games[0])
+
+                localStorage.setItem('juegos', JSON.stringify(this.listadoJuegos))
               }).catch(error => {
                 this.mostrarError(error)
               }).finally(() => (this.loading = false))
