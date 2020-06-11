@@ -1,24 +1,41 @@
-# promarketing
+# Promarketing
 
-## Project setup
-```
+Evaluación para desarrollador front-end
+
+## Tecnologías utilizada
+
+1. HTML
+2. CSS
+3. Vue
+4. Vuetify
+5. Axios
+6. Localstorage
+7. Cache
+
+## Pasos para ejecución del codigo
+
+Seleccione la carpeta donde desea ejecutar el codigo
+  
+Clone el repositorio
+
+~~~~ batch
+git clone https://github.com/csotox/evaluacion-front-end.git
+~~~~
+
+Ingrese a la carpeta del proyecto
+
+~~~~ batch
+cd evaluacion-front-end
+~~~~
+
+Instale las dependencias npm
+
+~~~~ batch
 npm install
-```
+~~~~
 
-### Compiles and hot-reloads for development
-```
+Compilar y ejecutar servidor
+
+~~~~ batch
 npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+~~~~
