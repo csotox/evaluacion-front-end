@@ -1,5 +1,9 @@
+<style>
+    iframe { display:block; width:100%; height:100vh; }
+</style>
 <template>
-  <v-card class="mx-auto"
+  <v-card
+    elevation="10"
     @click="mostrarJuego()"
   >
     <figure>
@@ -9,6 +13,12 @@
       </figcaption>
     </figure>
 
+    <v-dialog v-model="dialog" fullscreen>
+      <v-card>
+        <iframe :src="url"></iframe>
+      </v-card>
+    </v-dialog>
+
 </v-card>
 </template>
 
@@ -17,9 +27,17 @@
 export default {
   props: ['juego'],
 
+  data () {
+    return {
+      dialog: false,
+      url: ''
+    }
+  },
+
   methods: {
     mostrarJuego () {
-      alert(this.juego.url)
+      this.url = this.juego.url
+      this.dialog = true
     }
     // leerDatos
   }
