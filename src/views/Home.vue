@@ -1,12 +1,17 @@
 <template>
   <v-row align="center" justify="center">
+
+    <v-col cols="6" v-if="loading">
+      <baseloading
+        :titulo="'Preparando listado de juegos'" />
+    </v-col>
     <v-col cols="12" sm="6" md="4" xl="3"
       v-for="(item, i) in listadoJuegos"
-      :key="i">
+      :key="i"
+      v-else
+      >
         <basecard
             :juego="item"/>
-    </v-col>
-    <v-col cols="12">
     </v-col>
   </v-row>
 </template>
@@ -19,6 +24,7 @@ export default {
 
   data: function () {
     return {
+      loading: true,
       listadoJuegos: []
     }
   },
@@ -32,6 +38,7 @@ export default {
   methods: {
     leerDatos () {
       const url = 'https://promarketingchile.com/games.json'
+      this.loading = true
 
       axios.get(url)
         .then((response) => {
@@ -48,7 +55,7 @@ export default {
                 this.listadoJuegos = response.data.games[0]
               }).catch(error => {
                 this.mostrarError(error)
-              })
+              }).finally(() => (this.loading = false))
           } else {
             this.mostrarError(error)
           }
