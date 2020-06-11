@@ -34,7 +34,21 @@ export default {
         .then((response) => {
           this.listadoJuegos = response.data.games[0]
         }).catch(error => {
-          this.mostrarError(error)
+          // -- - ---------------------------------------------------------------------------------
+          // La API enviada para la evaluación no soporta CORS
+          // Por lo tanto se lee el contenido de la api desde un archivo json
+          // Nota: Esto es un parche mientras se corrige la API
+          if (error.request.status === 0) {
+            const url = 'games.json'
+            axios.get(url)
+              .then((response) => {
+                this.listadoJuegos = response.data.games[0]
+              }).catch(error => {
+                this.mostrarError(error)
+              })
+          } else {
+            this.mostrarError(error)
+          }
         })
     },
     // leerDatos
