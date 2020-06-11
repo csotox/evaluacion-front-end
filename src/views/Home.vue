@@ -1,14 +1,66 @@
 <template>
   <v-row align="center" justify="center">
     <v-col cols="12">
-      Hola mundo
+      <pre>
+        {{listadoJuegos}}
+      </pre>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
-  name: 'Home'
+  name: 'Home',
+
+  data: function () {
+    return {
+      listadoJuegos: []
+    }
+  },
+  // data
+
+  mounted () {
+    this.leerDatos()
+  },
+  // mounted
+
+  methods: {
+    leerDatos () {
+      const url = 'https://promarketingchile.com/games.json'
+
+      axios.get(url)
+        .then((response) => {
+          this.listadoJuegos = response.data.games[0]
+        }).catch(error => {
+          this.mostrarError(error)
+        })
+    },
+    // leerDatos
+
+    mostrarError (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data)
+        console.log(error.response.status)
+        console.log(error.response.headers)
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request)
+      } else {
+      // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message)
+      }
+      console.log(error.config)
+    }
+    // mostrarError
+
+  }
+  // methods
+
 }
 </script>
