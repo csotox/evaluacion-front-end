@@ -7,6 +7,8 @@ import '@mdi/font/css/materialdesignicons.css'
 
 Vue.config.productionTip = false
 
+Vue.component('basecard', require('./components/BaseCard.vue').default)
+
 new Vue({
   router,
   vuetify,
